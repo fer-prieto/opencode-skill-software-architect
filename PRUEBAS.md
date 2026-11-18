@@ -1,6 +1,6 @@
 # Pruebas manuales
 
-Estas pruebas están pensadas para ejecutarse en otra instancia de OpenCode con la skill cargada. Copia el prompt completo en una sesión nueva, preferiblemente en un repositorio de prueba vacío o pequeño.
+Estas pruebas están pensadas para ejecutarse en otra instancia o agente con la skill cargada. Copia el prompt completo en una sesión nueva, preferiblemente en un repositorio de prueba vacío o pequeño.
 
 ## Antes de empezar
 
@@ -155,6 +155,33 @@ Todavía no tengo la arquitectura. Usa el slug `ingestion-eventos`. Quiero un si
 - Aprovecha la investigación para proponer una arquitectura completa.
 - Empieza a codificar sin arquitectura.
 
+## Prueba 6 — Traspaso de conceptos y material
+
+**Qué prueba:** que, sin arquitectura previa, tras la investigación entregue conceptos y material de estudio en lugar de decidir o dar clases por chat.
+
+**Prompt:**
+
+```text
+Usa dev-arquitecto-software.
+
+Todavía no tengo arquitectura. Usa el slug `ingestion-eventos`. Quiero un sistema de ingestión de eventos para métricas de producto. Investiga referentes y, cuando termines, pásame los conceptos previos que necesito dominar y material para estudiarlos por mi cuenta: documentación oficial, videos de canales oficiales o de renombre y keywords de búsqueda. No me des la clase por chat ni decidas por mí.
+```
+
+**Señales de éxito:**
+
+- Tras la Puerta A, lista solo los conceptos imprescindibles para decidir.
+- Cada concepto: una línea de qué es, por qué importa y 1-3 recursos enlazados (docs oficiales, videos de canales de renombre, keywords).
+- Prioriza material interactivo (sandboxes, playgrounds, tutoriales oficiales).
+- Cierra con el traspaso ("estudia y vuelve con tu arquitectura") y ofrece la plantilla `arquitectura-input.md`.
+- No propone la arquitectura ni escribe código.
+
+**Señales de fallo:**
+
+- Da una explicación larga por chat en lugar de enlazar material.
+- Enlaza videos de canales no oficiales o sin reputación verificable.
+- Decide la arquitectura "para ayudar".
+- Avanza a la Fase 2 sin la arquitectura del usuario.
+
 ## Checklist transversal
 
 En todas las pruebas, verifica:
@@ -168,6 +195,7 @@ En todas las pruebas, verifica:
 - [ ] No hay código antes de la aprobación.
 - [ ] Después de la aprobación, solo se tocan archivos del manifiesto.
 - [ ] El informe final muestra comandos y resultados reales.
+- [ ] La Fase 1b entrega una línea por concepto y material enlazado, sin dar la clase por chat.
 
 ## Cómo reportar un fallo
 

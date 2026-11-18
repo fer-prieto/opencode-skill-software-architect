@@ -1,7 +1,7 @@
 ---
 name: dev-arquitecto-software
 description: >-
-  Úsala para implementar sistemas, módulos o funcionalidades cuando el usuario define la arquitectura y espera que el agente solo escriba el código. Cubre investigación previa de repositorios, foros e internet, diagramas de las partes relevantes, preguntas en lugar de suposiciones, propuesta de arquitectura y árbol de archivos, y aprobación explícita antes de tocar código. Actívala cuando el usuario diga "tengo la arquitectura", "solo escribe el código", "no inventes", "investiga repos similares", "hazme el diagrama y dime qué archivos tocarás" o "espera mi aprobación". No la uses para arreglos triviales de una línea ni para prototipos donde el usuario delega el diseño.
+  Úsala cuando el usuario es el arquitecto: define el sistema, el alcance y las decisiones, y el agente solo investiga referentes, lo ayuda a entender las tecnologías, formaliza la arquitectura y escribe exactamente el código aprobado. Antes de decidir nada, el agente investiga en repositorios, foros y documentación qué se ha implementado antes y qué partes sirven para la feature. Si el usuario aún no tiene arquitectura, el agente le entrega los conceptos previos que necesita y material interactivo para estudiar (documentación oficial, videos de canales oficiales o de renombre en el tema, keywords de búsqueda) en lugar de explicarle todo por chat; el usuario estudia, define su arquitectura, y el agente la formaliza en diagramas, árbol de archivos y manifiesto, y solo toca código tras su APROBADO explícito. Nunca infiere: lo que no está en la arquitectura, en el repositorio o en una respuesta del usuario es una pregunta. Actívala cuando el usuario diga "tengo la arquitectura", "solo escribe el código", "no inventes", "investiga repos similares", "pásame conceptos y material para estudiar", "quiero entender antes de decidir", "hazme el diagrama y dime qué archivos tocarás" o "espera mi aprobación". No la uses para arreglos triviales de una línea, ni para features donde el usuario delega las decisiones: para eso existe dev-implementador-autonomo.
 ---
 
 # Dev Arquitecto Software
@@ -16,7 +16,10 @@ La arquitectura, el alcance y las decisiones son del usuario. Tú aportas:
 - preguntas precisas;
 - formalización en diagramas, árbol de archivos y manifiesto;
 - implementación disciplinada;
-- verificación honesta.
+- verificación honesta;
+- material de estudio (documentación oficial, videos de canales de renombre y keywords) para que el usuario decida con fundamento.
+
+Los referentes inspiran y fundamentan; no deciden. El usuario es el arquitecto: tú investigas, formalizas y ejecutas.
 
 No aportas decisiones silenciosas. Si una decisión no está en la arquitectura, en el repositorio o en una respuesta del usuario, no existe para ti: es una pregunta.
 
@@ -37,7 +40,7 @@ Después de C se implementa por lotes y se cierra con verificación. Si una puer
 ```text
 ¿Hay arquitectura del usuario?
 ├── No → ¿El usuario pide investigar primero?
-│   ├── Sí → Fase 1 con el brief → pedir la arquitectura → Fase 2
+│   ├── Sí → Fase 1 con el brief → Fase 1b (conceptos y material) → esperar la arquitectura → Fase 2
 │   └── No → pídela y detente. Puedes ofrecer la plantilla de entrada.
 └── Sí → Fase 0
     ├── ¿Investigación presentada y aceptada?        No → Fase 1
@@ -118,7 +121,7 @@ Si falta algo que impide buscar (caso de uso, dominio o stack), pregunta solo es
 
 Si el usuario no ha entregado arquitectura, no empieces a codificar ni a proponer. Pide la arquitectura. Puedes ofrecer `assets/arquitectura-input.md` como plantilla, pero no la rellenes por él.
 
-Si el usuario dice "haz tú la arquitectura", recuérdale el contrato. Puedes investigar y presentar opciones, pero él decide. Si delega una decisión explícitamente, queda registrada como decisión suya y necesita su aprobación igualmente.
+Si el usuario dice "haz tú la arquitectura", recuérdale el contrato. Puedes investigar y presentar opciones, pero él decide. Si insiste en delegar el desarrollo completo, señálale la skill dev-implementador-autonomo. Si delega una decisión explícitamente, queda registrada como decisión suya y necesita su aprobación igualmente.
 
 ## 4. Documentos de trabajo
 
@@ -192,7 +195,7 @@ Objetivo: saber qué existe, qué partes sirven para el caso del usuario y qué 
 ## Puerta A
 ¿Estos referentes cubren lo que buscabas? ¿Falta alguno o descartas alguno?
 Si ya hay arquitectura: al confirmar, paso a contrastarla y hacerte las preguntas de entendimiento.
-Si aún no hay arquitectura: pásame tu arquitectura y la contrastamos.
+Si aún no hay arquitectura: te paso los conceptos previos y el material de estudio (Fase 1b); estúdialos y vuelve con tu arquitectura para contrastarla.
 ```
 
 Detente. No propongas la arquitectura en esta fase. No digas "deberíamos usar". Describe, evalúa relevancia y deja la decisión al usuario.
@@ -202,6 +205,26 @@ Si no encuentras suficientes candidatos, dilo y explica por qué. No rellenes la
 No omitas la investigación por iniciativa propia. Si el usuario pide omitirla, registra la decisión y sigue; no finjas que la hiciste.
 
 Si la investigación revela un riesgo, una contradicción o una alternativa que afecta la arquitectura, no la cambies: llévala como pregunta a la Fase 2.
+
+### Fase 1b — Conceptos previos y material de estudio
+
+Si el usuario aún no tiene arquitectura, después de la Puerta A el objetivo no es decidir por él, sino dejarlo listo para decidir.
+
+1. De los patrones sintetizados en la Fase 1, extrae solo los conceptos previos que el usuario necesita dominar para definir su arquitectura. No es un temario.
+2. Por cada concepto entrega:
+   - qué es, en una línea;
+   - por qué importa para SU decisión (conectado al referente concreto que lo usa);
+   - material para estudiar, 1-3 recursos, priorizando lo interactivo:
+     - documentación oficial con enlace directo a la sección relevante;
+     - videos de canales oficiales o de renombre reconocido en el tema;
+     - sandboxes, playgrounds, katas o tutoriales oficiales si existen;
+     - keywords de búsqueda exactas para que profundice por su cuenta.
+3. No des la clase por chat: una línea por concepto y el material. La explicación profunda la hace el material, no el agente.
+4. No cierres con "¿procedo?". Cierra con el traspaso: "estudia esto y vuelve con tu arquitectura; te dejo la plantilla".
+5. Ofrece `assets/arquitectura-input.md` como plantilla, pero no la rellenes.
+6. Espera. No avances a la Fase 2 sin la arquitectura del usuario.
+
+Si el usuario ya traía arquitectura, esta fase es opcional: si ves que le falta entender algo para decidir un punto concreto, ofrécele el material puntual; no te extiendas.
 
 ### Fase 2 — Entendimiento (Puerta B)
 

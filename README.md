@@ -1,51 +1,28 @@
 # dev-arquitecto-software
 
-Skill para desarrollo guiado por arquitectura. El usuario define la arquitectura; el agente investiga referentes, hace preguntas, formaliza el diseño y solo escribe el código que el usuario aprueba.
+Skill para desarrollo guiado por arquitectura, usable con cualquier agente que cargue skills por carpeta. El usuario define la arquitectura; el agente investiga referentes, hace preguntas, formaliza el diseño y solo escribe el código que el usuario aprueba. Si el usuario aún no tiene arquitectura, la skill le entrega los conceptos previos y material de estudio (documentación oficial, videos de canales de renombre, keywords) para que decida con fundamento; si lo que quiere es delegar todo el desarrollo, existe la skill hermana `dev-implementador-autonomo`.
 
 ## Qué garantiza
 
 - **Cero inferencias silenciosas**: lo que no está en la arquitectura, en el repositorio o en una respuesta del usuario es una pregunta.
 - **Investigación verificable**: repositorios, foros, documentación y postmortems, con enlaces y sin métricas inventadas.
 - **Comprensión antes de proponer**: el agente repite tu punto de vista y pregunta lo que falta.
+- **Traspaso de estudio**: si aún no hay arquitectura, conceptos previos y material interactivo (docs oficiales, videos de canales de renombre, keywords) para que el usuario decida; nunca clases largas por chat.
 - **Aprobación antes de codificar**: diagrama, árbol de archivos y manifiesto explícitos.
 - **Alcance bloqueado**: después de aprobar, solo se tocan los archivos del manifiesto.
 - **Verificación honesta**: comandos ejecutados, resultados y limitaciones; nada de "debería funcionar".
 
-## Instalación en OpenCode
+## Instalación
 
-La forma recomendada es clonar el repositorio en la carpeta global de skills de OpenCode:
+La skill es una carpeta con `SKILL.md` en la raíz y funciona con cualquier agente que cargue skills por carpeta. Clona el repositorio donde el agente busque skills y recarga la lista de skills del agente. Por ejemplo:
+
+- OpenCode: `~/.config/opencode/skills/` (global) o `.opencode/skills/` (por proyecto).
+- Otros agentes: la carpeta que indique su documentación.
 
 ```bash
-mkdir -p ~/.config/opencode/skills
-git clone https://github.com/TUUSUARIO/opencode-skill-software-architect.git \
+git clone https://github.com/fer-prieto/opencode-skill-software-architect.git \
   ~/.config/opencode/skills/dev-arquitecto-software
 ```
-
-Queda en:
-
-```text
-~/.config/opencode/skills/dev-arquitecto-software/
-```
-
-OpenCode descubre automáticamente `~/.config/opencode/skills`, así que no hace falta tocar `opencode.json`. Si la skill no aparece en la lista, ejecuta `/reload` en la sesión.
-
-### Alternativas
-
-1. Instalarla solo para un proyecto, dentro de `.opencode/skills/`:
-
-   ```bash
-   mkdir -p .opencode/skills
-   git clone https://github.com/TUUSUARIO/opencode-skill-software-architect.git \
-     .opencode/skills/dev-arquitecto-software
-   ```
-
-2. Añadir una ruta adicional al array `skills` de `opencode.json`:
-
-   ```json
-   {
-     "skills": ["~/mis-skills"]
-   }
-   ```
 
 ## Uso
 
